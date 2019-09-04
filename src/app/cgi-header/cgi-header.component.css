@@ -1,0 +1,13 @@
+.head{
+    border-bottom :solid red;
+    border-top :solid red;
+}
+
+.cgiLabel{
+    color: red;
+    font-size: 150%;
+}
+
+.title {
+    font-size: 100%;
+}

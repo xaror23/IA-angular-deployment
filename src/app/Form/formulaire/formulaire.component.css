@@ -1,0 +1,88 @@
+.entete{
+    background-color : grey;
+}
+
+b {
+    font-family: Arial;
+    font-size: 100%
+}
+
+.row{
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
+.container{
+    width : 100%
+}
+@media screen{
+
+    #section-to-print{
+       display : none;
+    }
+    
+
+}
+
+@media screen and (max-width: 400px) {
+    .competences {
+        width: 10%
+    }
+  }
+
+  @media screen and (max-width: 400px) {
+      .evaluation {
+          font-size : 50%
+      }
+  }
+
+  @media print {
+    *,
+    *:before,
+    *:after {
+        background: transparent !important;
+        color: #000 !important; 
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+
+
+    #cgiLabel {
+        color : red !important;
+    }
+
+    #originalcomponent{
+        visibility: hidden;
+        display : none;
+    }
+
+    #headerForm{
+        display : none;
+    }
+
+    #buttonSection{
+        visibility: hidden;
+        display : none;       
+    }
+
+    #section-to-print, #section-to-print * {
+      visibility: visible;
+    }
+    #section-to-print {
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    .head{
+        border-bottom :solid red;
+        border-top :solid red;
+    }
+
+    #cgiLabel {
+        color : red;
+    }
+    
+
+  }

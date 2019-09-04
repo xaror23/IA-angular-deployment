@@ -1,0 +1,27 @@
+<app-cgi-header></app-cgi-header>
+<div class="container" *ngFor="let gestionnaire of gestionnaires">
+    <div class="row">
+        <div class="col-md-12">
+            <b>Gestionnaire : </b>
+            <p>{{gestionnaire.name}}</p>
+        </div>
+    </div>
+    <div class="row">
+            <table class="table">
+                    <thead>
+                        <th class="col-md-4"><b>Membres</b></th>
+                        <th class="col-md-4"> <b>Statut</b></th>
+                        <td class="col-md-4"><b>To Form</b></td>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let member of gestionnaire.members">
+                            <tr>
+                                <td class="col-md-4"><p>{{member.conseillername}}</p></td>
+                                <td class="col-md-4"><b>{{member.status}}</b></td>
+                                <td class="col-md-4"><a (click)="goToCustomerHistory(member)" >Formulaire</a></td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+    </div>
+</div>

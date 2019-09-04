@@ -1,0 +1,430 @@
+<div id="originalcomponent" class="container-fluid">
+    <app-cgi-header></app-cgi-header>
+    <form [formGroup]="evaluationForm"  (ngSubmit)="onSubmit()">
+        <div class="container-fluid entete"><label class="labelEntete align-middle" for=""><b class="pagination-centered">IDENTIFICATION</b> </label></div>
+        <div class="container-fluid">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-3 col-sm-3  col-xs-3">
+                        <label for=""><b>Nom du membre:</b></label>
+                    </div>
+                    <div class="col-md-3 col-sm-3  col-xs-3">
+                        <p>{{Identification.NomMembre}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-sm-3  col-xs-3">
+                        <label for=""><b>Rôle du membre:</b></label>
+                    </div>
+                    <div  class="col-md-3 col-sm-3  col-xs-3">
+                        <p>{{Identification.RoleMembre}}</p>
+                    </div>
+                </div>    
+                <div class="row">
+                    <div class="col-md-3 col-sm-3  col-xs-3"><label for=""><b>Période d'évaluation</b></label></div>
+                    <div class="col-md-3 col-sm-3  col-xs-3"><label for="">De: Octobre 2018 À Septembre 2019</label></div>
+                    <div class="col-md-3 col-sm-3  col-xs-3"><input type="checkbox" formControlName="MandatEnCours"><p>En cours de Mandat</p></div>
+                    <div class="col-md-3 col-sm-3  col-xs-3"><input type="checkbox" formControlName="MandatFin"><p> En fin de mandat</p></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-sm-3  col-xs-3"><b>Évaluateur iA: </b></div>
+                    <div class="col-md-3 col-sm-3  col-xs-3">
+                        <p>{{Identification.EvaluateurIA}}</p>
+                    </div>
+                    <div class="col-md-3 col-sm-3  col-xs-3"><b>Rôle :</b></div>
+                    <div  class="col-md-3 col-sm-3  col-xs-3">
+                        <p>{{Identification.RoleEvaluateurIA}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-sm-3  col-xs-3"><b>Représentant de CGI: </b></div>
+                    <div class="col-md-3 col-sm-3  col-xs-3">
+                        <p>{{Identification.RepresentantCGI}}</p>
+                    </div>
+                    <div class="col-md-3 col-sm-3  col-xs-3"><b>Rôle :</b></div>
+                    <div class="col-md-3 col-sm-3  col-xs-3">
+                        <p>{{Identification.RoleRepresentantCGI}}</p>
+                    </div>
+                </div>        
+            </div>            
+        </div>
+        <div class="container-fluid entete"><label class="labelEntete" for=""><b>Context du mandat</b> </label></div>
+        <div class="container-fluid">
+            <div class="row">
+                <input *ngIf="role !== 'Gestionnaire' && role !== 'Administration'"  class="form-control box" type="text" formControlName="Context">
+                <input *ngIf="role === 'Gestionnaire' || role === 'Administration'"  class="form-control box" type="text" formControlName="Context" disabled>
+            </div>
+        </div>
+        <div class="container-fluid entete"><label class="labelEntete" for="" ><b>ÉVALUATION DES COMPÉTENCES</b> </label></div>
+            <div class="container-fluid">
+                    <div class="row">
+                        <div  class="col-md-3 col-sm-3  col-xs-3"><b class="evaluation">Compétence</b></div>
+                        <div  class="col-md-3 col-sm-3  col-xs-3"><b class="evaluation">Auto-Évaluation</b></div>
+                        <div  class="col-md-3 col-sm-3  col-xs-3"><b class="evaluation">Commentaires</b></div>
+                        <div  class="col-md-3 col-sm-3  col-xs-3"><b class="evaluation">Évaluation IA</b></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-sm-3  col-xs-3"><b class="evaluation">Autonomie, initiative et Leadership</b></div>
+                        <div class="col-md-3 col-sm-3  col-xs-3">
+                            <select *ngIf="role !== 'Gestionnaire' && role !== 'Administration'" class="form-control competences" formControlName="AutonomieAuto">
+                                <option *ngFor="let critere of critereEvaluation" [value]="critere">{{critere}}</option>
+                            </select>
+                            <select *ngIf="role === 'Gestionnaire' || role === 'Administration'"  class="form-control competences" formControlName="AutonomieAuto" disabled>
+                                <option *ngFor="let critere of critereEvaluation" [value]="critere">{{critere}}</option>
+                            </select>                              
+                        </div>
+                        <div class="col-md-3 col-sm-3  col-xs-3">
+                            <input *ngIf="role !== 'Gestionnaire' && role !== 'Administration'" type="text" class="form-control competences" formControlName="AutonomieCommentaires">
+                            <input *ngIf="role === 'Gestionnaire' || role === 'Administration'" type="text" class="form-control competences" formControlName="AutonomieCommentaires" disabled>                            
+                        </div>
+                        <div class="col-md-3 col-sm-3  col-xs-3">
+                            <select *ngIf="role === 'Gestionnaire'" class="form-control competences" formControlName="AutonomieIA">
+                                <option *ngFor="let critere of critereEvaluation" [value]="critere">{{critere}}</option>
+                            </select>
+                            <select *ngIf="role !== 'Gestionnaire' " class="form-control  competences" formControlName="AutonomieIA" disabled>
+                                <option *ngFor="let critere of critereEvaluation" [value]="critere">{{critere}}</option>
+                            </select>                               
+                        </div>                        
+                    </div>
+                    <div class="row">
+                            <div class="col-md-3 col-sm-3  col-xs-3"><b class="evaluation">Collaboration au sein de l'équipe et intégration à iA</b></div>
+                            <div class="col-md-3 col-sm-3  col-xs-3">
+                                <select *ngIf="role !== 'Gestionnaire' && role !== 'Administration'"  class="form-control competences" formControlName="CollaborationAuto">
+                                    <option *ngFor="let critere of critereEvaluation" [value]="critere">{{critere}}</option>
+                                </select>
+                                <select *ngIf="role === 'Gestionnaire' || role === 'Administration'"   class="form-control competences" formControlName="CollaborationAuto" disabled>
+                                    <option *ngFor="let critere of critereEvaluation" [value]="critere">{{critere}}</option>
+                                </select>                                 
+                            </div>
+                            <div class="col-md-3 col-sm-3  col-xs-3">
+                                <input *ngIf="role !== 'Gestionnaire' && role !== 'Administration'" type="text" class="form-control competences" formControlName="CollaborationCommentaires">
+                                <input *ngIf="role === 'Gestionnaire' || role === 'Administration'" type="text" class="form-control competences" formControlName="CollaborationCommentaires" disabled>                                
+                            </div>
+                            <div class="col-md-3 col-sm-3  col-xs-3">
+                                <select *ngIf="role === 'Gestionnaire'"  class="form-control competences" formControlName="CollaborationIA">
+                                    <option *ngFor="let critere of critereEvaluation" [value]="critere">{{critere}}</option>
+                                </select>
+                                <select *ngIf="role !== 'Gestionnaire' " class="form-control competences" formControlName="CollaborationIA" disabled>
+                                    <option *ngFor="let critere of critereEvaluation" [value]="critere">{{critere}}</option>
+                                </select>                                 
+                            </div>                        
+                    </div>
+                    <div class="row">
+                            <div class="col-md-3 col-sm-3  col-xs-3"><b class="evaluation">Communications orales et écrites</b></div>
+                            <div  class="col-md-3 col-sm-3  col-xs-3">
+                                <select *ngIf="role !== 'Gestionnaire' && role !== 'Administration'" class="form-control competences" formControlName="CommunicationAuto">
+                                    <option *ngFor="let critere of critereEvaluation" [value]="critere">{{critere}}</option>
+                                </select>
+                                <select *ngIf="role === 'Gestionnaire' || role === 'Administration'"  class="form-control competences" formControlName="CommunicationAuto" disabled>
+                                    <option *ngFor="let critere of critereEvaluation" [value]="critere">{{critere}}</option>
+                                </select>                                  
+                            </div>
+                            <div  class="col-md-3 col-sm-3  col-xs-3">
+                                <input *ngIf="role !== 'Gestionnaire' && role !== 'Administration'" type="text" class="form-control competences" formControlName="CommunicationCommentaires">
+                                <input *ngIf="role === 'Gestionnaire' || role === 'Administration'" type="text" class="form-control competences" formControlName="CommunicationCommentaires" disabled>                                 
+                            </div>
+                            <div class="col-md-3 col-sm-3  col-xs-3">
+                                <select *ngIf="role === 'Gestionnaire'" class="form-control competences" formControlName="CommunicationIA">
+                                    <option *ngFor="let critere of critereEvaluation" [value]="critere">{{critere}}</option>
+                                </select>
+                                <select *ngIf="role !== 'Gestionnaire' " class="form-control competences" formControlName="CommunicationIA" disabled>
+                                    <option *ngFor="let critere of critereEvaluation" [value]="critere">{{critere}}</option>
+                                </select>                                  
+                            </div>                        
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-sm-3  col-xs-3"><b class="evaluation">Compétences techniques / analytiques</b></div>
+                        <div  class="col-md-3 col-sm-3  col-xs-3">
+                            <select *ngIf="role !== 'Gestionnaire' && role !== 'Administration'" class="form-control competences" formControlName="CompetenceAuto">
+                                <option *ngFor="let critere of critereEvaluation" [value]="critere">{{critere}}</option>
+                            </select>
+                            <select *ngIf="role === 'Gestionnaire' || role === 'Administration'"  class="form-control competences" formControlName="CompetenceAuto" disabled>
+                                <option *ngFor="let critere of critereEvaluation" [value]="critere">{{critere}}</option>
+                            </select>                               
+                        </div>
+                        <div class="col-md-3 col-sm-3  col-xs-3">
+                            <input *ngIf="role !== 'Gestionnaire' && role !== 'Administration'" type="text" class="form-control competences" formControlName="CompetenceCommentaires">
+                            <input *ngIf="role === 'Gestionnaire' || role === 'Administration'" type="text" class="form-control competences" formControlName="CompetenceCommentaires" disabled>                            
+                        </div>
+                        <div class="col-md-3 col-sm-3  col-xs-3">
+                            <select *ngIf="role === 'Gestionnaire'"  class="form-control competences" formControlName="CompetenceIA">
+                                <option *ngFor="let critere of critereEvaluation" [value]="critere">{{critere}}</option>
+                            </select>
+                            <select *ngIf="role !== 'Gestionnaire' "  class="form-control competences" formControlName="CompetenceIA" disabled>
+                                <option *ngFor="let critere of critereEvaluation" [value]="critere">{{critere}}</option>
+                            </select>                                
+                        </div>                        
+                    </div>
+                    <div class="row">
+                            <div class="col-md-3 col-sm-3  col-xs-3"><b class="evaluation">Qualité des services rendux</b></div>
+                            <div class="col-md-3 col-sm-3  col-xs-3">
+                                <select  *ngIf="role !== 'Gestionnaire' && role !== 'Administration'" class="form-control competences" formControlName="QualiteAuto">
+                                    <option *ngFor="let critere of critereEvaluation" [value]="critere">{{critere}}</option>
+                                </select>
+                                <select  *ngIf="role === 'Gestionnaire' || role === 'Administration'" class="form-control competences" formControlName="QualiteAuto" disabled>
+                                    <option *ngFor="let critere of critereEvaluation" [value]="critere">{{critere}}</option>
+                                </select>    
+                            </div>
+                            <div class="col-md-3 col-sm-3  col-xs-3">
+                                <input *ngIf="role !== 'Gestionnaire' && role !== 'Administration'" type="text" class="form-control competences" formControlName="QualiteCommentaires">
+                                <input *ngIf="role === 'Gestionnaire' || role === 'Administration'" type="text" class="form-control competences" formControlName="QualiteCommentaires" disabled>                                
+                            </div>
+                            <div class="col-md-3 col-sm-3  col-xs-3">
+                                <select  *ngIf="role === 'Gestionnaire'" class="form-control competences" formControlName="QualiteIA">
+                                    <option *ngFor="let critere of critereEvaluation" [value]="critere">{{critere}}</option>
+                                </select>
+                                <select *ngIf="role !== 'Gestionnaire' " class="form-control competences" formControlName="QualiteIA" disabled>
+                                    <option *ngFor="let critere of critereEvaluation" [value]="critere">{{critere}}</option>
+                                </select>                                     
+                            </div>                        
+                    </div>
+                    <div class="row"  >
+                        <div  class="col-md-3 col-sm-3  col-xs-3"><b>Est-ce que le client reprendrait le membre?</b></div>
+                        <div  class="col-md-3 col-sm-3  col-xs-3">
+                            <input *ngIf="role === 'Gestionnaire' "  type="checkbox" formControlName="RepriseDuClientParLeMembre" >
+                            <input *ngIf="role !== 'Gestionnaire' "  type="checkbox" formControlName="RepriseDuClientParLeMembre" disabled >
+                        </div>
+                    </div>
+                    <div class="row" >
+                        <div class="col-md-3 col-sm-3  col-xs-3"><b>La raison principale, ce qui le démarque</b></div>
+                        <div class="col-md-9 col-sm-9  col-xs-9">
+                            <input *ngIf="role === 'Gestionnaire'"  type="text" class="form-control" formControlName="Demarcation" >
+                            <input *ngIf="role !== 'Gestionnaire' "  type="text" class="form-control" disabled >
+                        </div>
+                    </div>           
+        </div>
+        <div class="container-fluid entete"><label class="labelEntete align-middle" for=""><b>COMMENTAIRES</b> </label></div>
+        <div class="container-fluid">
+            <div class="row" >
+                <b>Commentaire générique de l'évaluateur</b>
+            </div>
+            <div class="row" *ngIf="role === 'Gestionnaire'">
+                <input class="form-control box"  type="text"  formControlName="CommentaireEvaluateur">
+            </div>
+            <div class="row" *ngIf="role !== 'Gestionnaire' ">
+                    <input class="form-control box"  type="text"  formControlName="CommentaireEvaluateur" disabled>
+                </div>            
+            <div class="row">
+                <div class="col-md-3 col-sm-3  col-xs-3"><b>Commentaire du membre</b></div>
+                <div class="col-md-3 col-sm-3  col-xs-3"><p>Défi par rapport à l'expérience</p></div>
+                <div class="col-md-2 col-sm-2  col-xs-2">
+                    <b> Minime </b>
+                    <input type="radio" name="defiExperienceCategorie"  formControlName="defiExperienceCategorie" *ngIf="role !== 'Gestionnaire' && role !== 'Administration'" value="Minime">
+                    <input type="radio" name="defiExperienceCategorie"  formControlName="defiExperienceCategorie"  *ngIf="role === 'Gestionnaire' || role === 'Administration';" disabled />
+                </div>
+                <div class="col-md-2  col-sm-2  col-xs-2">
+                    <b> Intéressant </b>
+                    <input type="radio" name="defiExperienceCategorie" formControlName="defiExperienceCategorie"  *ngIf="role !== 'Gestionnaire' && role !== 'Administration' "  value="Interessant">
+                    <input type="radio" name="defiExperienceCategorie" formControlName="defiExperienceCategorie" *ngIf="role === 'Gestionnaire' || role === 'Administration'; " disabled  />
+                </div>
+                <div class="col-md-2 col-sm-2  col-xs-2" >               
+                    <b> Important </b>
+                    <input type="radio" name="defiExperienceCategorie" formControlName="defiExperienceCategorie" *ngIf="role !== 'Gestionnaire' && role !== 'Administration'" value="Important" >
+                    <input type="radio" name="defiExperienceCategorie"  formControlName="defiExperienceCategorie" *ngIf="role === 'Gestionnaire' || role === 'Administration'" disabled>
+                </div>      
+            </div>
+            <div class="row" *ngIf="role === 'Gestionnaire' || role === 'Administration'">
+                <input type="text" class="form-control"  formControlName="CommentaireMembre" disabled>
+            </div>    
+            <div class="row" *ngIf="role !== 'Gestionnaire' && role !== 'Administration'">
+                <input type="text" class="form-control"  formControlName="CommentaireMembre">
+            </div>                     
+        </div>
+        <div class="container-fluid entete"><label class="labelEntete align-middle" for=""><b>SIGNATURES</b> </label></div>
+        <div class="container-fluid">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td><b>Évaluateur: </b><b>{{Identification.SignatureEvaluateurIA}}</b></td>
+                        <td><b>Responsable d'entente: </b><b>{{Identification.SignatureGestionnaireCGI}}</b></td>
+                        <td><b>Membre: </b><b>{{Identification.SignatureMember}}</b></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>Date : </b>  
+                            <b>{{Identification.dateSignatureEvaluateurIA}}</b>
+                        </td>
+                        <td>
+                            <b>Date : </b>             
+                            <b>{{Identification.dateSignatureGestionnaireCGI}}</b>  
+                        </td>
+                        <td>
+                            <b>Date : </b>   
+                            <b>{{Identification.dateSignatureMembre}}</b>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>               
+        </div>
+    </form> 
+</div>
+<div id="section-to-print" class="container">
+        <div class="container-fluid head" >
+            <table>
+                <tbody>
+                    <td><b id="cgiLabel" >CGI</b></td>
+                    <td> - </td>
+                    <td></td>
+                    <td><b  class="title">FORMULAIRE D'ÉVALUATION DE LA PERFORMANCE D'UN MEMBRE EN PROJET</b></td>
+                </tbody>
+            </table>
+        </div>
+        <form [formGroup]="evaluationForm" >
+            <table class="table">
+                <thead>
+                    <th><b>IDENTIFICATION</b></th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>Nom du membre:</b></td>
+                        <td><p>{{Identification.NomMembre}}</p></td>
+                        <td><b>Rôle du membre:</b></td>
+                        <td><p>{{Identification.RoleMembre}}</p></td>                        
+                    </tr>
+                    <tr>
+                        <td><b>Période d'évaluation</b></td>
+                        <td><p>De: Octobre 2018 À Septembre 2019</p></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><b>Évaluateur iA: </b></td>
+                        <td><p>{{Identification.EvaluateurIA}}</p></td>
+                        <td><b>Rôle</b></td>
+                        <td><p>{{Identification.RoleEvaluateurIA}}</p></td>                             
+                    </tr>
+                    <tr>
+                        <td><b>Représentant de CGI: </b></td>
+                        <td><p>{{Identification.RepresentantCGI}}</p></td>
+                        <td><b>Rôle</b></td>
+                        <td><p>{{Identification.RoleRepresentantCGI}}</p></td>                             
+                    </tr>                    
+                </tbody>
+            </table>
+            <div class="container">          
+              <div class="container-fluid entete"><label class="labelEntete" for=""><b>Context du mandat</b> </label></div>
+                <div class="container-fluid">
+                    <div class="row">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td><b>{{Identification.Context}}</b></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="entete"><label class="labelEntete" for="" ><b>ÉVALUATION DES COMPÉTENCES</b> </label></div>
+                    <table class="table">
+                        <thead>
+                            <th><b>Compétence</b></th>
+                            <th><b>Auto-Évaluation</b></th>
+                            <th><b>Commentaires</b></th>
+                            <th><b>Évaluation IA</b></th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><b>Autonomie, initiative et Leadership</b></td>
+                                <td><p>{{Identification.AutonomieAuto}}</p> </td>
+                                <td><p>{{Identification.AutonomieCommentaires}}</p></td>
+                                <td><p>{{Identification.AutonomieIA}}</p></td>
+                            </tr>
+                            <tr>
+                                <td><b>Collaboration au sein de l'équipe et intégration à iA</b></td>
+                                <td><p>{{Identification.CollaborationAuto}}</p></td>
+                                <td><p>{{Identification.CollaborationCommentaires}}</p></td>
+                                <td><p>{{Identification.CollaborationIA}}</p></td>
+                            </tr>
+                            <tr>
+                                <td><b>Communications orales et écrites</b></td>
+                                <td><p>{{Identification.CommunicationAuto}}</p></td>
+                                <td><p>{{Identification.CommunicationCommentaires}}</p></td>
+                                <td><p>{{Identification.CommunicationIA}}</p></td>
+                            </tr>
+                            <tr>
+                                <td><b>Compétences techniques / analytiques</b></td>
+                                <td><p>{{Identification.CompetenceAuto}}</p></td>
+                                <td><p>{{Identification.CompetenceCommentaires}}</p></td>
+                                <td><p>{{Identification.CompentenceIA}}</p></td>
+                            </tr>
+                            <tr>
+                                <td><b>Qualité des services rendus</b></td>
+                                <td><p>{{Identification.QualiteAuto}}</p></td>
+                                <td><p>{{Identification.QualiteCommentaires}}</p></td>
+                                <td><p>{{Identification.QualiteIA}}</p></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td><b>Est-ce que le client reprendrait le membre?</b></td>
+                                <td><p>{{Identification.RepriseDuClientParLeMembre}}</p></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td><b>La raison principale, ce qui le démarque</b></td>
+                                <td><p>{{Identification.Demarcation}}</p></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                <div class="container-fluid entete"><label class="labelEntete align-middle" for=""><b>COMMENTAIRES</b> </label></div>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td><b>Commentaire générique de l'évaluateur</b></td>
+                            <td><p>{{Identification.CommentaireEvaluateur}}</p></td>
+                        </tr>
+                        <tr>
+                            <td><b>Défi par rapport à l'expérience</b></td>
+                            <td><p>{{Identification.defiExperienceCategorie}}</p></td>                            
+                        </tr>
+                        <tr>
+                            <td><b>Commentaire membre</b></td>
+                            <td><p>{{Identification.CommentaireMembre}}</p></td>                            
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="container-fluid entete"><label class="labelEntete align-middle" for=""><b>SIGNATURES</b> </label></div>
+                <div class="container-fluid">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td><b>Évaluateur: </b><p>{{Identification.SignatureEvaluateurIA}}</p></td>
+                                <td><b>Responsable d'entente: </b><p>{{Identification.SignatureGestionnaireCGI}}</p></td>
+                                <td><b>Membre: </b><p>{{Identification.SignatureMember}}</p></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>Date : </b>  
+                                    <p>{{Identification.dateSignatureEvaluateurIA}}</p>
+                                </td>
+                                <td>
+                                    <b>Date : </b>             
+                                    <p>{{Identification.dateSignatureGestionnaireCGI}}</p>  
+                                </td>
+                                <td>
+                                    <b>Date : </b>   
+                                    <p>{{Identification.dateSignatureMembre}}</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>               
+                </div>
+            </div>
+        </form>
+</div>
+
+<div id="buttonSection" class="container">
+    <div class="container">
+        <div class="row" *ngIf="role !== 'Administration'">
+            <button type="submit" class="btn btn-success" (click)="onSubmit()">Submit</button>
+        </div>
+        <div class="row" *ngIf="role === 'Gestionnaire'">
+            <button type="submit" class="btn btn-success" (click)="printComponent()">Print</button>
+        </div>        
+    </div> 
+</div>
